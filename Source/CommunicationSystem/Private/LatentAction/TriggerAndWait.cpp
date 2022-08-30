@@ -10,9 +10,9 @@ void FTriggerAndWait::UpdateOperation(FLatentResponse& Response)
 		if (Subsystem->GetEventState(Event) == EEventState::Done)
 		{
 			OutExecRef = EExecState::OnFinished;
-			Subsystem->SetEventState(Event, EEventState::Registered);
 			Option = Subsystem->OptionCache;
 			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);
+			Subsystem->SetEventState(Event, EEventState::Registered);
 			Subsystem->OptionCache = FName("NoOption");
 		}
 	}

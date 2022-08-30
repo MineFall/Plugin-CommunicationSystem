@@ -59,7 +59,7 @@ public:
 			FName EventID,
 			AActor* EventOwner,
 			AActor* ExecutingCharacter,
-			FName& Option,
+			FName& OptionRow,
 			EExecState& Out
 		);
 
