@@ -53,7 +53,7 @@ void UCS_BlueprintLibrary::DelayOutput(const UObject* WorldContextObject, FLaten
 
 #endif
 
-void UCS_BlueprintLibrary::TriggerAndWaitEventEnd(const UObject* WorldContextObject, FLatentActionInfo LatentAction, FName EventID, AActor* EventOwner, AActor* ExecutingCharacter, FName& OptionRow, EExecState& Out)
+void UCS_BlueprintLibrary::TriggerAndWaitEventEnd(const UObject* WorldContextObject, FLatentActionInfo LatentAction, FName EventID, AActor* EventOwner, AActor* ExecutingCharacter, FName& Option, EExecState& Out)
 {
 	UGameInstance* GameInstance = UGameplayStatics::GetGameInstance(WorldContextObject);
 	UCS_Subsystem* Subsystem = nullptr;
@@ -64,12 +64,11 @@ void UCS_BlueprintLibrary::TriggerAndWaitEventEnd(const UObject* WorldContextObj
 		Subsystem->TriggerEvent(WorldContextObject, EventID, EventOwner, ExecutingCharacter, bSuccess);
 
 
-		//注册Latent时间等待Event结束
 		UWorld* World = GameInstance->GetWorld();
 		FLatentActionManager& Manager = World->GetLatentActionManager();
 		if (Manager.FindExistingAction<FTriggerAndWait>(LatentAction.CallbackTarget, LatentAction.UUID) == NULL)
 		{
-			Manager.AddNewAction(LatentAction.CallbackTarget, LatentAction.UUID, new FTriggerAndWait(LatentAction, EventID, Out, Subsystem, bSuccess, OptionRow));
+			Manager.AddNewAction(LatentAction.CallbackTarget, LatentAction.UUID, new FTriggerAndWait(LatentAction, EventID, Out, Subsystem, bSuccess, Option));
 		}
 
 	};
